@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { getFacturas } from "../services/getFacturas";
-import InvoceView from "./InvoiceView";
-import InvoceDataClient from "./InvoiceDataClient";
-import InvoceDataEmpresa from "./InvoceDataEmpresa";
-import ListItemsView from "./ListItemsView";
+import { getFacturas } from "./services/getFacturas";
+import InvoceView from "./components/InvoiceView";
+import InvoceDataClient from "./components/InvoiceDataClient";
+import InvoceDataEmpresa from "./components/InvoceDataEmpresa";
+import ListItemsView from "./components/ListItemsView";
+import TotalView from "./components/TotalView";
 
 const InvoiceApp = () => {
 
     //obtenemos el objeto facturas que retorna la funcion
-    const {nombre, id, empresa, cliente, items} = getFacturas();
+    const {nombre, id, empresa, cliente, items, total} = getFacturas();
 
     return (
         
@@ -31,7 +32,8 @@ const InvoiceApp = () => {
                     </div>
 
                     <ListItemsView items={items} />
-
+                    
+                    <TotalView total={total}/>
                 </div> 
 
             </div>

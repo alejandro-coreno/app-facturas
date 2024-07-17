@@ -1,8 +1,8 @@
 import PropTypes from "prop-types"
 
 const InvoceDataClient = ({cliente}) => {
-    const { nombreCliente, apellido, direccion } = cliente; 
-    const { pais, city, calle, numero } = direccion;
+    const { nombreCliente, apellido, direccion: { pais, city, calle, numero } } = cliente; 
+
 
     return (
         <div className="col">
