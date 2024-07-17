@@ -17,19 +17,22 @@ export const factura = {
     } ,
     items: [
         {
-            Producto: 'CPU',
+            id: 1,
+            producto: 'CPU',
             precio: 499,
             cantidad: 1
         },
 
         {
-            Producto: 'Celeron',
+            id:2,
+            producto: 'Celeron',
             precio: 344,
             cantidad: 2
         },
 
         {
-            Producto: 'AMD',
+            id: 3,
+            producto: 'AMD',
             precio: 600,
             cantidad: 3
         } 

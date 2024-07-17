@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 const InvoceDataClient = ({cliente}) => {
     const { nombreCliente, apellido, direccion: { pais, city, calle, numero } } = cliente; 
