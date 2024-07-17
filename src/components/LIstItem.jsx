@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 
 const ListItem = ({item}) => {
     return (
@@ -10,5 +11,11 @@ const ListItem = ({item}) => {
         
     )
 }
+
+ListItem.propTypes = {
+    item: PropTypes.object.isRequired
+}
+
+
 
 export default ListItem;

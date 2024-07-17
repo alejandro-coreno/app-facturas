@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 
 const InvoceDataClient = ({cliente}) => {
     const { nombreCliente, apellido, direccion } = cliente; 
@@ -14,6 +15,10 @@ const InvoceDataClient = ({cliente}) => {
 
         </div>
     )
+}
+
+InvoceDataClient.propTypes = {
+    cliente: PropTypes.object.isRequired
 }
 
 export default InvoceDataClient

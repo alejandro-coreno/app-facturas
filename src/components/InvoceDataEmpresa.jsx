@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const InvoceDataEmpresa = ({empresa }) => {
     return (
         <div className="col">
@@ -9,5 +11,10 @@ const InvoceDataEmpresa = ({empresa }) => {
         </div>
     );
 };
+
+
+InvoceDataEmpresa.propTypes = {
+    empresa: PropTypes.object.isRequired
+}
 
 export default InvoceDataEmpresa;

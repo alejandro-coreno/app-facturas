@@ -11,34 +11,34 @@ const InvoiceApp = () => {
     const {nombre, id, empresa, cliente, items} = getFacturas();
 
     return (
-        <>
-            <div className="container">
-                <div className="card my-3">
-                    <div className="card-header">
+        
+        <div className="container">
+            <div className="card my-3">
+                <div className="card-header">
                         Ejemplo Factura
+                </div>
+
+                <div className="card-body">
+                       
+                    <InvoceView id={id} nombre={nombre} />
+
+                    <div className="row my-3">
+                           
+                        <InvoceDataClient cliente={cliente}/>
+                            
+                        <InvoceDataEmpresa empresa={ empresa } />
+
                     </div>
 
-                    <div className="card-body">
-                       
-                       <InvoceView id={id} nombre={nombre} />
+                    <ListItemsView items={items} />
 
-                        <div className="row my-3">
-                           
-                            <InvoceDataClient cliente={cliente}/>
-                            
-                            <InvoceDataEmpresa empresa={ empresa } />
-
-                        </div>
-
-                        <ListItemsView items={items} />
-
-                    </div> 
-
-                </div>
+                </div> 
 
             </div>
 
-        </>
+        </div>
+
+        
     )
 }
 

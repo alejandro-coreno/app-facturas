@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import ListItem from "./LIstItem";
 
 const ListItemsView = ({items}) => {
@@ -22,5 +23,9 @@ const ListItemsView = ({items}) => {
     </>
     );
 };
+
+ListItemsView.propTypes = {
+    items: PropTypes.array.isRequired
+}
 
 export default ListItemsView;
