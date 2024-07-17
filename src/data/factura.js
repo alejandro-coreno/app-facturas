@@ -7,7 +7,7 @@ export const factura = {
         direccion: {
             pais: 'USA', 
             city: 'Los Angeles',
-            calle: 'Calle 1',
+            calle: 'One lim',
             numero: 24
         },
     },
