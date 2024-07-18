@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFacturas } from "./services/getFacturas";
+import { getFacturas, calcularItems } from "./services/getFacturas";
 import InvoceView from "./components/InvoiceView";
 import InvoceDataClient from "./components/InvoiceDataClient";
 import InvoceDataEmpresa from "./components/InvoceDataEmpresa";
@@ -29,32 +29,37 @@ const invoceInitial = {
 }
 
 const InvoiceApp = () => {
+    // Contador para el id de manera dinamica 
+    const [ counter , setCounter ] = useState(4);
 
     const [facturas,setfacturas] = useState(invoceInitial);
 
     // Guardamos el estado de los items iniciales para poder agregar nuevos
     const [items , setItems] = useState([]);
-
-    useEffect(() => {
-        const data = getFacturas();
-        setfacturas( data );
-        setItems( data.items);
-    }, [])
-    //obtenemos el objeto facturas que retorna la funcion
-    const {nombre, id, empresa, cliente, total} = facturas;
-
+    
+    const [total, setTotal] = useState(0);
+    
     // Ocupamos un solo objeto para cada valor del formulario
     const [valuesForm, setValuesForm] = useState({
         productValue: '',
         precioValue: '',
         cantidadValue: ''
-    })
-
-    const { productValue , precioValue, cantidadValue} = valuesForm;
-
+    });
     
-    // Contador para el id de manera dinamica 
-    const [ counter , setCounter ] = useState(4);
+    const { productValue , precioValue, cantidadValue} = valuesForm;
+    
+    useEffect(() => {
+        const data = getFacturas();
+        setfacturas( data );
+        setItems( data.items);
+    }, []);
+
+    useEffect(() => {
+        setTotal(calcularItems(items));
+    }, [items])
+
+    //obtenemos el objeto facturas que retorna la funcion
+    const {nombre, id, empresa, cliente } = facturas;
 
 
     const handleChange = ({ target : { name, value}}) => {
