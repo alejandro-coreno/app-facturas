@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getFacturas } from "./services/getFacturas";
 import InvoceView from "./components/InvoiceView";
 import InvoceDataClient from "./components/InvoiceDataClient";
@@ -6,20 +6,64 @@ import InvoceDataEmpresa from "./components/InvoceDataEmpresa";
 import ListItemsView from "./components/ListItemsView";
 import TotalView from "./components/TotalView";
 
+
+const invoceInitial = {
+    id: 0,
+    nombre: '',
+    cliente: {
+        nombreCliente: '',
+        apellido: '',
+        direccion: {
+            pais: '', 
+            city: '',
+            calle: '',
+            numero: 0
+        },
+    },
+    empresa: {
+        nombreEmpresa: '',
+        fiscalia: ''
+    } ,
+    items: []
+        
+}
+
 const InvoiceApp = () => {
 
-    //obtenemos el objeto facturas que retorna la funcion
-    const {nombre, id, empresa, cliente, items: itemsInicial, total} = getFacturas();
+    const [facturas,setfacturas] = useState(invoceInitial);
 
-    const [ productValue, setProductValue ] = useState('');
-    const [ precioValue, setPrecioValue] = useState('');
-    const [ cantidadValue, setCantidadValue] = useState('');
+    // Guardamos el estado de los items iniciales para poder agregar nuevos
+    const [items , setItems] = useState([]);
+
+    useEffect(() => {
+        const data = getFacturas();
+        setfacturas( data );
+        setItems( data.items);
+    }, [])
+    //obtenemos el objeto facturas que retorna la funcion
+    const {nombre, id, empresa, cliente, total} = facturas;
+
+    // Ocupamos un solo objeto para cada valor del formulario
+    const [valuesForm, setValuesForm] = useState({
+        productValue: '',
+        precioValue: '',
+        cantidadValue: ''
+    })
+
+    const { productValue , precioValue, cantidadValue} = valuesForm;
+
     
     // Contador para el id de manera dinamica 
     const [ counter , setCounter ] = useState(4);
 
-    // Guardamos el estado de los items iniciales para poder agregar nuevos
-    const [items , setItems] = useState(itemsInicial);
+
+    const handleChange = ({ target : { name, value}}) => {
+        
+        // Traemos los valores anteriores y en el la propiedad name modifica el valor de cada uno
+        setValuesForm({...valuesForm, 
+            [ name ]: value
+        });       
+    }   
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,11 +85,14 @@ const InvoiceApp = () => {
             precio: parseInt(precioValue.trim(), 10), 
             cantidad: +cantidadValue.trim() 
         }]); 
-        
-        setProductValue('');
-        setPrecioValue('');
-        setCantidadValue('');
+
+        setValuesForm({
+            productValue: '',
+            precioValue: '',
+            cantidadValue: ''
+        })
         setCounter( counter + 1 );
+
     }
 
 
@@ -73,34 +120,34 @@ const InvoiceApp = () => {
                     
                     <TotalView total={total}/>
 
-                    <form className="w-50" onSubmit={ e => handleSubmit(e)}>
+                    <form className="w-50" onSubmit={ handleSubmit }>
                         <input 
                             type="text" 
-                            name="producto" 
+                            name="productValue" 
                             id="producto" 
                             placeholder="Producto"
                             className="form-control m-3"
                             value={productValue}
-                            onChange={e => setProductValue(e.target.value) }
+                            onChange={handleChange}
                         />
 
                         <input 
                             type="text" 
-                            name="precio" 
+                            name="precioValue" 
                             id="precio" 
                             placeholder="Precio"
                             className="form-control m-3"
                             value={precioValue}
-                            onChange={ e => setPrecioValue(e.target.value)}
+                            onChange={ handleChange }
                         />
 
                         <input 
                             type="text" 
-                            name="cantidad" 
+                            name="cantidadValue" 
                             id="cantidad" 
                             placeholder="Cantidad"
                             className="form-control m-3"
-                            onChange={e => setCantidadValue(e.target.value)}
+                            onChange={handleChange}
                             value={cantidadValue}
                         />
                         <button type="submit" className="btn btn-primary m-3">Nuevo Item</button>
@@ -112,7 +159,7 @@ const InvoiceApp = () => {
         </div>
 
         
-    )
+    );
 }
 
 export default InvoiceApp;

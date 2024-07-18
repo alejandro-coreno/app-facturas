@@ -9,7 +9,7 @@ const TotalView = ({ total }) => {
 }
 
 TotalView.propTypes = {
-    total: PropTypes.number.isRequired
+    total: PropTypes.number
 }
 
 export default TotalView;
