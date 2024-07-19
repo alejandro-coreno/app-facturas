@@ -5,6 +5,7 @@ import InvoceDataClient from "./components/InvoiceDataClient";
 import InvoceDataEmpresa from "./components/InvoceDataEmpresa";
 import ListItemsView from "./components/ListItemsView";
 import TotalView from "./components/TotalView";
+import FormItemsView from "./components/FormItemsView";
 
 
 const invoceInitial = {
@@ -38,16 +39,7 @@ const InvoiceApp = () => {
     const [items , setItems] = useState([]);
     
     const [total, setTotal] = useState(0);
-    
-    // Ocupamos un solo objeto para cada valor del formulario
-    const [valuesForm, setValuesForm] = useState({
-        productValue: '',
-        precioValue: '',
-        cantidadValue: ''
-    });
-    
-    const { productValue , precioValue, cantidadValue} = valuesForm;
-    
+     
     useEffect(() => {
         const data = getFacturas();
         setfacturas( data );
@@ -61,29 +53,7 @@ const InvoiceApp = () => {
     //obtenemos el objeto facturas que retorna la funcion
     const {nombre, id, empresa, cliente } = facturas;
 
-
-    const handleChange = ({ target : { name, value}}) => {
-        
-        // Traemos los valores anteriores y en el la propiedad name modifica el valor de cada uno
-        setValuesForm({...valuesForm, 
-            [ name ]: value
-        });       
-    }   
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        //Funcion isNaN -> Verifica que sea un numero en la expresion
-
-        if(precioValue.trim().length <=1 ) return;
-        if(precioValue.trim().length <=1) return;
-        if(isNaN(precioValue.trim())) return;
-        if(cantidadValue.trim().length < 1) return;
-        if(isNaN(cantidadValue.trim())) {
-            alert('Error:: Cantidad no es un numero');
-            return;   
-        }
-
+    const handleAddItems = ({ productValue, precioValue, cantidadValue}) => {
         setItems([...items, {
             id: counter,
             producto: productValue.trim(), 
@@ -91,15 +61,8 @@ const InvoiceApp = () => {
             cantidad: +cantidadValue.trim() 
         }]); 
 
-        setValuesForm({
-            productValue: '',
-            precioValue: '',
-            cantidadValue: ''
-        })
         setCounter( counter + 1 );
-
     }
-
 
     return (
         
@@ -125,38 +88,7 @@ const InvoiceApp = () => {
                     
                     <TotalView total={total}/>
 
-                    <form className="w-50" onSubmit={ handleSubmit }>
-                        <input 
-                            type="text" 
-                            name="productValue" 
-                            id="producto" 
-                            placeholder="Producto"
-                            className="form-control m-3"
-                            value={productValue}
-                            onChange={handleChange}
-                        />
-
-                        <input 
-                            type="text" 
-                            name="precioValue" 
-                            id="precio" 
-                            placeholder="Precio"
-                            className="form-control m-3"
-                            value={precioValue}
-                            onChange={ handleChange }
-                        />
-
-                        <input 
-                            type="text" 
-                            name="cantidadValue" 
-                            id="cantidad" 
-                            placeholder="Cantidad"
-                            className="form-control m-3"
-                            onChange={handleChange}
-                            value={cantidadValue}
-                        />
-                        <button type="submit" className="btn btn-primary m-3">Nuevo Item</button>
-                    </form>
+                    <FormItemsView  handler={ handleAddItems }/>
                 </div> 
 
             </div>
