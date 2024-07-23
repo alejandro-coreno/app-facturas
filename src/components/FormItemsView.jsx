@@ -48,7 +48,7 @@ const FormItemsView = ({ handler }) => {
             className="btn btn-primary m-3"
             onClick={() => setMostrarForm(!mostrarForm)}
         >
-            {mostrarForm ? "Ocultar Formulario" : "Mostrar Formulario"}
+            { mostrarForm ? "Ocultar Formulario" : "Mostrar Formulario"}
         </button>
 
             {  mostrarForm && 

@@ -64,6 +64,12 @@ const InvoiceApp = () => {
         setCounter( counter + 1 );
     }
 
+    const handleDeletedItem = (id) => {
+        const deleteItem = items.filter( item  => item.id !== id);
+        setItems( deleteItem );
+
+    }
+
     return (
         
         <div className="container">
@@ -84,7 +90,7 @@ const InvoiceApp = () => {
 
                     </div>
 
-                    <ListItemsView items={items} />
+                    <ListItemsView items={items} handlerDeletedItem={handleDeletedItem}/>
                     
                     <TotalView total={total}/>
 

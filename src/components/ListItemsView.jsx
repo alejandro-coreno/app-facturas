@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import ListItem from "./LIstItem";
 
-const ListItemsView = ({items}) => {
+const ListItemsView = ({items, handlerDeletedItem}) => {
     return  (
     <>
         <h5>Productos de la factura </h5>
@@ -16,7 +16,7 @@ const ListItemsView = ({items}) => {
 
             <tbody>
             {items.map((item, index) => (
-                <ListItem key={index} item={item}/>
+                <ListItem key={index} item={item} handlerDeletedItem={ handlerDeletedItem }/>
             ))}
             </tbody>
         </table>
